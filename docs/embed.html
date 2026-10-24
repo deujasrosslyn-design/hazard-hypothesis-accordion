@@ -6,16 +6,15 @@
   <title>Evacuation access hypotheses</title>
   <style>
     :root {
-      --ink: #1a3036;
-      --body: #2d454c;
-      --muted: #4d646b;
-      --line: #c5d2d4;
-      --paper: #f4f7f6;
-      --page: #d5e2e4;
-      --header: #e7f0ee;
-      --header-open: #dceae6;
-      --accent: #1d6a62;
-      --focus: #0c3f48;
+      /* Page around the embed and the caption. Nav bar is #f0ede1. */
+      --page: #f7f5ef;
+      --card: #f0ede1;
+      --line: #cec29d;
+      /* Title bar. Active underline is #007e7a. Story heading "Hypothesis 1" is #2e546c. */
+      --ink: #202b2b;
+      --label: #2e546c;
+      --accent: #007e7a;
+      --prose: #52616b;
     }
 
     * {
@@ -28,8 +27,11 @@
       width: 100%;
     }
 
+    html {
+      background: var(--page);
+    }
+
     body {
-      min-height: 100%;
       background: var(--page);
       color: var(--ink);
       font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
@@ -39,24 +41,24 @@
 
     main {
       width: 100%;
-      padding: 1rem 0.9rem 1.15rem;
+      padding: 0.75rem 1rem 0;
     }
 
     h1 {
-      margin: 0 0 0.85rem;
-      font-size: 1.28rem;
+      margin: 0 0 0.7rem;
+      color: var(--label);
+      font-size: 1.2rem;
       font-weight: 650;
       letter-spacing: -0.015em;
-      line-height: 1.25;
+      line-height: 1.3;
     }
 
     .accordion {
       width: 100%;
-      background: var(--paper);
-      border: 1px solid #b7c8cb;
-      border-radius: 10px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
       overflow: hidden;
-      box-shadow: 0 1px 0 rgba(22, 48, 54, 0.04);
     }
 
     .accordion-item + .accordion-item {
@@ -71,17 +73,16 @@
 
     .accordion-button {
       width: 100%;
-      min-height: 3.6rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 0.85rem;
       margin: 0;
-      padding: 0.85rem 1rem;
+      padding: 0.95rem 1rem 0.95rem 0.9rem;
       border: 0;
       border-left: 4px solid var(--accent);
-      background: var(--header);
-      color: var(--ink);
+      background: var(--card);
+      color: var(--label);
       font: inherit;
       font-weight: 650;
       text-align: left;
@@ -89,11 +90,11 @@
     }
 
     .accordion-button:hover {
-      background: #e1eeea;
+      background: var(--page);
     }
 
     .accordion-button[aria-expanded="true"] {
-      background: var(--header-open);
+      background: var(--page);
     }
 
     .accordion-button:focus {
@@ -101,7 +102,7 @@
     }
 
     .accordion-button:focus-visible {
-      outline: 3px solid var(--focus);
+      outline: 3px solid var(--accent);
       outline-offset: -3px;
       position: relative;
       z-index: 1;
@@ -129,7 +130,7 @@
     .accordion-content {
       display: grid;
       grid-template-rows: 0fr;
-      background: var(--paper);
+      background: var(--card);
       transition: grid-template-rows 0.28s ease;
     }
 
@@ -145,22 +146,21 @@
     .accordion-panel p {
       margin: 0;
       padding: 0.15rem 1.05rem 1rem 1.15rem;
-      color: var(--body);
+      color: var(--prose);
       font-weight: 450;
     }
 
     @media (max-width: 520px) {
       main {
-        padding: 0.8rem 0.65rem 1rem;
+        padding: 0.8rem 0.65rem 0;
       }
 
       h1 {
-        font-size: 1.18rem;
+        font-size: 1.12rem;
       }
 
       .accordion-button {
-        min-height: 3.75rem;
-        padding: 0.8rem 0.75rem;
+        padding: 0.9rem 0.75rem 0.9rem 0.7rem;
         font-size: 1rem;
       }
 
