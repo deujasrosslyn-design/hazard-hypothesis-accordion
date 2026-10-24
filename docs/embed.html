@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Evacuation access hypotheses</title>
+  <style>
+    :root {
+      --ink: #1a3036;
+      --body: #2d454c;
+      --muted: #4d646b;
+      --line: #c5d2d4;
+      --paper: #f4f7f6;
+      --page: #d5e2e4;
+      --header: #e7f0ee;
+      --header-open: #dceae6;
+      --accent: #1d6a62;
+      --focus: #0c3f48;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      width: 100%;
+    }
+
+    body {
+      min-height: 100%;
+      background: var(--page);
+      color: var(--ink);
+      font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+      font-size: 16px;
+      line-height: 1.45;
+    }
+
+    main {
+      width: 100%;
+      padding: 1rem 0.9rem 1.15rem;
+    }
+
+    h1 {
+      margin: 0 0 0.85rem;
+      font-size: 1.28rem;
+      font-weight: 650;
+      letter-spacing: -0.015em;
+      line-height: 1.25;
+    }
+
+    .accordion {
+      width: 100%;
+      background: var(--paper);
+      border: 1px solid #b7c8cb;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 1px 0 rgba(22, 48, 54, 0.04);
+    }
+
+    .accordion-item + .accordion-item {
+      border-top: 1px solid var(--line);
+    }
+
+    h2 {
+      margin: 0;
+      font-size: inherit;
+      font-weight: inherit;
+    }
+
+    .accordion-button {
+      width: 100%;
+      min-height: 3.6rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.85rem;
+      margin: 0;
+      padding: 0.85rem 1rem;
+      border: 0;
+      border-left: 4px solid var(--accent);
+      background: var(--header);
+      color: var(--ink);
+      font: inherit;
+      font-weight: 650;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .accordion-button:hover {
+      background: #e1eeea;
+    }
+
+    .accordion-button[aria-expanded="true"] {
+      background: var(--header-open);
+    }
+
+    .accordion-button:focus {
+      outline: none;
+    }
+
+    .accordion-button:focus-visible {
+      outline: 3px solid var(--focus);
+      outline-offset: -3px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .accordion-label {
+      display: block;
+    }
+
+    .accordion-icon {
+      flex: 0 0 auto;
+      width: 0.55rem;
+      height: 0.55rem;
+      margin-right: 0.15rem;
+      border-right: 2px solid var(--accent);
+      border-bottom: 2px solid var(--accent);
+      transform: translateY(-0.12rem) rotate(45deg);
+      transition: transform 0.28s ease;
+    }
+
+    .accordion-button[aria-expanded="true"] .accordion-icon {
+      transform: translateY(0.12rem) rotate(225deg);
+    }
+
+    .accordion-content {
+      display: grid;
+      grid-template-rows: 0fr;
+      background: var(--paper);
+      transition: grid-template-rows 0.28s ease;
+    }
+
+    .accordion-content.is-open {
+      grid-template-rows: 1fr;
+    }
+
+    .accordion-panel {
+      overflow: hidden;
+      min-height: 0;
+    }
+
+    .accordion-panel p {
+      margin: 0;
+      padding: 0.15rem 1.05rem 1rem 1.15rem;
+      color: var(--body);
+      font-weight: 450;
+    }
+
+    @media (max-width: 520px) {
+      main {
+        padding: 0.8rem 0.65rem 1rem;
+      }
+
+      h1 {
+        font-size: 1.18rem;
+      }
+
+      .accordion-button {
+        min-height: 3.75rem;
+        padding: 0.8rem 0.75rem;
+        font-size: 1rem;
+      }
+
+      .accordion-panel p {
+        padding-right: 0.8rem;
+        padding-left: 0.95rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .accordion-content,
+      .accordion-icon {
+        transition: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Evacuation access hypotheses</h1>
+    <div class="accordion">
+      <div class="accordion-item">
+        <h2>
+          <button type="button" class="accordion-button" id="hypothesis-1-button" aria-expanded="false" aria-controls="hypothesis-1-panel">
+            <span class="accordion-label">Hypothesis 1: Landslide Exposure</span>
+            <span class="accordion-icon" aria-hidden="true"></span>
+          </button>
+        </h2>
+        <div class="accordion-content" id="hypothesis-1-panel" role="region" aria-labelledby="hypothesis-1-button" aria-hidden="true">
+          <div class="accordion-panel">
+            <p>Communities near or below steep slopes may face greater evacuation challenges because landslides can threaten homes and block routes.</p>
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h2>
+          <button type="button" class="accordion-button" id="hypothesis-2-button" aria-expanded="false" aria-controls="hypothesis-2-panel">
+            <span class="accordion-label">Hypothesis 2: Flood Exposure</span>
+            <span class="accordion-icon" aria-hidden="true"></span>
+          </button>
+        </h2>
+        <div class="accordion-content" id="hypothesis-2-panel" role="region" aria-labelledby="hypothesis-2-button" aria-hidden="true">
+          <div class="accordion-panel">
+            <p>Low-lying communities near rivers and flood zones may face greater challenges when flooding affects settlements and transportation access.</p>
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h2>
+          <button type="button" class="accordion-button" id="hypothesis-3-button" aria-expanded="false" aria-controls="hypothesis-3-panel">
+            <span class="accordion-label">Hypothesis 3: Transportation Isolation</span>
+            <span class="accordion-icon" aria-hidden="true"></span>
+          </button>
+        </h2>
+        <div class="accordion-content" id="hypothesis-3-panel" role="region" aria-labelledby="hypothesis-3-button" aria-hidden="true">
+          <div class="accordion-panel">
+            <p>Communities with few roads, bridges, trails, or other connections may be more vulnerable to isolation.</p>
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h2>
+          <button type="button" class="accordion-button" id="hypothesis-4-button" aria-expanded="false" aria-controls="hypothesis-4-panel">
+            <span class="accordion-label">Hypothesis 4: Combined Challenges</span>
+            <span class="accordion-icon" aria-hidden="true"></span>
+          </button>
+        </h2>
+        <div class="accordion-content" id="hypothesis-4-panel" role="region" aria-labelledby="hypothesis-4-button" aria-hidden="true">
+          <div class="accordion-panel">
+            <p>The greatest challenges may occur where hazard exposure, vulnerable populations, and limited transportation access overlap.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <script>
+    (function () {
+      var root = document.querySelector(".accordion");
+      if (!root) return;
+      var buttons = root.querySelectorAll(".accordion-button");
+      buttons.forEach(function (button) {
+        button.addEventListener("click", function () {
+          var panel = document.getElementById(button.getAttribute("aria-controls"));
+          if (!panel) return;
+          var open = button.getAttribute("aria-expanded") === "true";
+          var next = !open;
+          button.setAttribute("aria-expanded", next ? "true" : "false");
+          panel.classList.toggle("is-open", next);
+          panel.setAttribute("aria-hidden", next ? "false" : "true");
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
