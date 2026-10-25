@@ -6,268 +6,238 @@
   <title>Transportation and response data</title>
   <style>
     :root {
-      --page: #f7f5ef;
-      --card: #f0ede1;
-      --line: #cec29d;
-      --ink: #202b2b;
-      --label: #2e546c;
-      --accent: #007e7a;
-      --prose: #52616b;
+      --page: #eaf7ff;
+      --node: #c3e9ff;
+      --node-hover: #b4e3ff;
+      --ring: #91c11b;
+      --ink: #07131a;
+      --selected: #316e9b;
+      --prose: #1a2c36;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
-    html,
-    body {
+    html, body {
       margin: 0;
-      width: 100%;
-    }
-
-    html {
       background: var(--page);
     }
 
     body {
-      background: var(--page);
       color: var(--ink);
-      font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+      font-family: "Segoe UI", system-ui, sans-serif;
       font-size: 16px;
       line-height: 1.45;
     }
 
     main {
+      width: min(100%, 560px);
+      margin: 0 auto;
+      padding: 0.35rem 0.4rem 0.2rem;
+    }
+
+    .stage {
+      container-type: size;
+      position: relative;
       width: 100%;
-      padding: 0.75rem 1rem 0;
+      aspect-ratio: 1;
+      --thick: 8.6cqw;
+      --orbit: 33.2cqw;
+      --size: 27.6cqw;
+      --count: 5;
     }
 
-    h1 {
-      margin: 0 0 0.7rem;
-      color: var(--label);
-      font-size: 1.2rem;
-      font-weight: 650;
-      letter-spacing: -0.015em;
-      line-height: 1.3;
+    .stage[data-count="4"] {
+      --orbit: 32.2cqw;
+      --size: 31.5cqw;
+      --count: 4;
     }
 
-    h2 {
+    .ring {
+      position: absolute;
+      z-index: 0;
+      left: 50%;
+      top: 50%;
+      box-sizing: border-box;
+      width: calc(var(--orbit) * 2 + var(--thick));
+      height: calc(var(--orbit) * 2 + var(--thick));
+      border: var(--thick) solid var(--ring);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .hub {
+      position: absolute;
+      z-index: 1;
+      left: 50%;
+      top: 50%;
+      width: 9.5em;
+      max-width: 30cqw;
       margin: 0;
-      font-size: inherit;
-      font-weight: inherit;
+      transform: translate(-50%, -50%);
+      color: var(--ink);
+      font-size: clamp(12px, 3.05cqw, 22px);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      text-align: center;
     }
 
-    .list {
-      width: 100%;
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      overflow: hidden;
+    .stage[data-count="5"] .hub {
+      width: 6.4em;
+      max-width: 38cqw;
+      font-size: clamp(18px, 5.5cqw, 34px);
     }
 
-    .item + .item {
-      border-top: 1px solid var(--line);
-    }
-
-    .item-button {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.85rem;
-      margin: 0;
-      padding: 0.8rem 1rem 0.8rem 0.9rem;
+    .node {
+      --a: calc((360deg / var(--count)) * var(--i) - 90deg);
+      position: absolute;
+      z-index: 1;
+      left: 50%;
+      top: 50%;
+      width: var(--size);
+      height: var(--size);
+      margin-left: calc(var(--size) / -2);
+      margin-top: calc(var(--size) / -2);
+      padding: 8%;
       border: 0;
-      border-left: 4px solid var(--accent);
-      background: var(--card);
-      color: var(--label);
+      border-radius: 50%;
+      background: var(--node);
+      color: var(--ink);
       font: inherit;
-      font-weight: 650;
-      text-align: left;
+      font-size: clamp(11px, 2.75cqw, 15.5px);
+      font-weight: 700;
+      line-height: 1.12;
+      letter-spacing: -0.015em;
+      text-align: center;
+      text-wrap: balance;
       cursor: pointer;
       appearance: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform: rotate(var(--a)) translateX(var(--orbit)) rotate(calc(var(--a) * -1));
     }
 
-    .item-button:hover,
-    .item-button[aria-expanded="true"] {
-      background: var(--page);
+    .node:hover:not([aria-expanded="true"]) {
+      background: var(--node-hover);
     }
 
-    .item-button:focus {
-      outline: none;
+    .node[aria-expanded="true"] {
+      z-index: 2;
+      background: var(--selected);
+      color: #fff;
+      box-shadow: 0 0 0 3px var(--ring);
     }
 
-    .item-button:focus-visible {
-      outline: 3px solid var(--accent);
-      outline-offset: -3px;
-      position: relative;
-      z-index: 1;
+    .node:focus { outline: none; }
+
+    .node:focus-visible {
+      outline: 3px solid var(--ink);
+      outline-offset: 3px;
     }
 
-    .item-label {
-      display: block;
-    }
-
-    .item-icon {
-      flex: 0 0 auto;
-      width: 0.55rem;
-      height: 0.55rem;
-      margin-right: 0.15rem;
-      border-right: 2px solid var(--accent);
-      border-bottom: 2px solid var(--accent);
-      transform: translateY(-0.12rem) rotate(45deg);
-    }
-
-    .item-button[aria-expanded="true"] .item-icon {
-      transform: translateY(0.12rem) rotate(225deg);
-    }
+    .detail[hidden] { display: none; }
 
     .detail {
-      background: var(--card);
+      margin: 0.15rem 0.15rem 0.45rem;
+      padding-top: 0.55rem;
+      border-top: 3px solid var(--ring);
+      color: var(--prose);
     }
 
-    .detail[hidden] {
-      display: none;
-    }
-
-    dl {
-      margin: 0;
-      padding: 0.15rem 1.05rem 0.95rem 1.15rem;
-    }
+    dl { margin: 0; }
 
     dt {
-      margin: 0.6rem 0 0.12rem;
-      color: var(--label);
+      margin: 0.55rem 0 0.12rem;
+      color: #24597f;
       font-size: 0.78rem;
-      font-weight: 650;
+      font-weight: 700;
     }
 
-    dt:first-child {
-      margin-top: 0;
-    }
+    dt:first-child { margin-top: 0; }
 
     dd {
       margin: 0;
-      color: var(--prose);
       font-weight: 450;
     }
 
     .hyp {
       display: block;
-      color: var(--label);
-      font-weight: 650;
+      color: var(--ink);
+      font-weight: 700;
     }
 
-    @media (max-width: 520px) {
-      main {
-        padding: 0.8rem 0.65rem 0;
-      }
+    .hyp + .hyp { margin-top: 0.12rem; }
 
-      h1 {
-        font-size: 1.12rem;
-      }
-
-      .item-button {
-        padding: 0.75rem 0.75rem 0.75rem 0.7rem;
-        font-size: 1rem;
-      }
-
-      dl {
-        padding-right: 0.8rem;
-        padding-left: 0.95rem;
-      }
+    .hyp-note {
+      display: block;
+      margin-top: 0.2rem;
+      font-weight: 450;
     }
 
-    @media (prefers-reduced-motion: reduce) {
-      .item-icon {
-        transition: none;
-      }
+    @media (max-width: 380px) {
+      .node { font-size: 10.5px; }
+      .stage[data-count="4"] .hub { font-size: 12px; }
     }
+
   </style>
 </head>
 <body>
   <main>
-    <h1>Transportation and response data</h1>
-    <div class="list">
-      <div class="item">
-        <h2>
-          <button type="button" class="item-button" id="roads-button" aria-expanded="false" aria-controls="roads-detail">
-            <span class="item-label">Roads, bridges, and trails</span>
-            <span class="item-icon" aria-hidden="true"></span>
-          </button>
-        </h2>
-        <div class="detail" id="roads-detail" role="region" aria-labelledby="roads-button" hidden>
-          <dl>
-            <dt>What it helps answer</dt>
-            <dd>Transportation data can show whether communities have several ways to evacuate or depend on only one road, bridge, or trail.</dd>
-            <dt>Hypothesis</dt>
-            <dd><span class="hyp">H3 — Hypothesis 3: Transportation Isolation</span></dd>
-            <dt>Benefit</dt>
-            <dd>This directly supports H3 by helping identify communities that may become isolated.</dd>
-            <dt>Limitation</dt>
-            <dd>Existing maps may not include informal trails, seasonal paths, or recent damage.</dd>
-          </dl>
-        </div>
-      </div>
-      <div class="item">
-        <h2>
-          <button type="button" class="item-button" id="closures-button" aria-expanded="false" aria-controls="closures-detail">
-            <span class="item-label">Road closures and damage reports</span>
-            <span class="item-icon" aria-hidden="true"></span>
-          </button>
-        </h2>
-        <div class="detail" id="closures-detail" role="region" aria-labelledby="closures-button" hidden>
-          <dl>
-            <dt>What it helps answer</dt>
-            <dd>Road closure reports can show whether roads and bridges are still usable after flooding or landslides.</dd>
-            <dt>Benefit</dt>
-            <dd>These reports can provide current information that may not appear in older transportation datasets.</dd>
-            <dt>Limitation</dt>
-            <dd>The reports may be delayed, incomplete, or more common in areas with better communication.</dd>
-          </dl>
-        </div>
-      </div>
-      <div class="item">
-        <h2>
-          <button type="button" class="item-button" id="shelters-button" aria-expanded="false" aria-controls="shelters-detail">
-            <span class="item-label">Shelters and emergency facilities</span>
-            <span class="item-icon" aria-hidden="true"></span>
-          </button>
-        </h2>
-        <div class="detail" id="shelters-detail" role="region" aria-labelledby="shelters-button" hidden>
-          <dl>
-            <dt>What it helps answer</dt>
-            <dd>Shelter and emergency facility locations can help determine whether communities have realistic access to assistance during an evacuation.</dd>
-            <dt>Benefit</dt>
-            <dd>The team can measure the distance and travel access to available support.</dd>
-            <dt>Limitation</dt>
-            <dd>A facility may be mapped but unavailable, damaged, overcrowded, or difficult to reach.</dd>
-          </dl>
-        </div>
-      </div>
-      <div class="item">
-        <h2>
-          <button type="button" class="item-button" id="support-button" aria-expanded="false" aria-controls="support-detail">
-            <span class="item-label">UN support sites and humanitarian reports</span>
-            <span class="item-icon" aria-hidden="true"></span>
-          </button>
-        </h2>
-        <div class="detail" id="support-detail" role="region" aria-labelledby="support-button" hidden>
-          <dl>
-            <dt>What it helps answer</dt>
-            <dd>These sources can show where assistance is already available and where communities may be far from existing support.</dd>
-            <dt>Benefit</dt>
-            <dd>They can help identify gaps in response coverage and resource allocation.</dd>
-            <dt>Limitation</dt>
-            <dd>Locations and services can change, and the information may not represent every organization working in the area.</dd>
-          </dl>
-        </div>
-      </div>
+    <div class="stage" data-count="4">
+      <div class="ring" aria-hidden="true"></div>
+      <h1 class="hub">Transportation and response data</h1>
+      <button type="button" class="node" style="--i:0" id="roads-button" aria-expanded="false" aria-controls="roads-detail">Roads, bridges, and trails</button>
+      <button type="button" class="node" style="--i:1" id="closures-button" aria-expanded="false" aria-controls="closures-detail">Road closures and damage reports</button>
+      <button type="button" class="node" style="--i:2" id="shelters-button" aria-expanded="false" aria-controls="shelters-detail">Shelters and emergency facilities</button>
+      <button type="button" class="node" style="--i:3" id="support-button" aria-expanded="false" aria-controls="support-detail">UN support sites and humanitarian reports</button>
+    </div>
+    <div class="detail" id="roads-detail" role="region" aria-labelledby="roads-button" hidden>
+      <dl>
+        <dt>What it helps answer</dt>
+        <dd>Transportation data can show whether communities have several ways to evacuate or depend on only one road, bridge, or trail.</dd>
+        <dt>Hypothesis</dt>
+        <dd><span class="hyp">H3 — Hypothesis 3: Transportation Isolation</span></dd>
+        <dt>Benefit</dt>
+        <dd>This directly supports H3 by helping identify communities that may become isolated.</dd>
+        <dt>Limitation</dt>
+        <dd>Existing maps may not include informal trails, seasonal paths, or recent damage.</dd>
+      </dl>
+    </div>
+    <div class="detail" id="closures-detail" role="region" aria-labelledby="closures-button" hidden>
+      <dl>
+        <dt>What it helps answer</dt>
+        <dd>Road closure reports can show whether roads and bridges are still usable after flooding or landslides.</dd>
+        <dt>Benefit</dt>
+        <dd>These reports can provide current information that may not appear in older transportation datasets.</dd>
+        <dt>Limitation</dt>
+        <dd>The reports may be delayed, incomplete, or more common in areas with better communication.</dd>
+      </dl>
+    </div>
+    <div class="detail" id="shelters-detail" role="region" aria-labelledby="shelters-button" hidden>
+      <dl>
+        <dt>What it helps answer</dt>
+        <dd>Shelter and emergency facility locations can help determine whether communities have realistic access to assistance during an evacuation.</dd>
+        <dt>Benefit</dt>
+        <dd>The team can measure the distance and travel access to available support.</dd>
+        <dt>Limitation</dt>
+        <dd>A facility may be mapped but unavailable, damaged, overcrowded, or difficult to reach.</dd>
+      </dl>
+    </div>
+    <div class="detail" id="support-detail" role="region" aria-labelledby="support-button" hidden>
+      <dl>
+        <dt>What it helps answer</dt>
+        <dd>These sources can show where assistance is already available and where communities may be far from existing support.</dd>
+        <dt>Benefit</dt>
+        <dd>They can help identify gaps in response coverage and resource allocation.</dd>
+        <dt>Limitation</dt>
+        <dd>Locations and services can change, and the information may not represent every organization working in the area.</dd>
+      </dl>
     </div>
   </main>
   <script>
     (function () {
-      var buttons = document.querySelectorAll(".item-button");
+      var buttons = document.querySelectorAll(".node");
       buttons.forEach(function (button) {
         button.addEventListener("click", function () {
           var panel = document.getElementById(button.getAttribute("aria-controls"));
@@ -284,6 +254,7 @@
         });
       });
     })();
+
   </script>
 </body>
 </html>
