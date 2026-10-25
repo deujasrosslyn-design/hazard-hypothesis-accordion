@@ -5,8 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Transportation and response data</title>
   <style>
+
     :root {
-      --page: #eaf7ff;
+      --page: #f7f5ef;
       --node: #c3e9ff;
       --node-hover: #b4e3ff;
       --ring: #91c11b;
@@ -31,27 +32,57 @@
     }
 
     main {
-      position: relative;
-      width: min(100%, 560px);
-      margin: 0 auto;
-      padding: 0.35rem 0.4rem 0.2rem;
+      width: 100%;
+      margin: 0;
+      padding: 0.15rem 0.3rem 0.1rem;
     }
 
     .stage {
-      container-type: size;
       position: relative;
       width: 100%;
+      height: 560px;
+      max-height: 100vw;
+      overflow: hidden;
+    }
+
+    .wheel {
+      container-type: size;
+      position: absolute;
+      top: 0;
+      left: 50%;
+      height: 100%;
+      width: auto;
       aspect-ratio: 1;
+      transform: translateX(-50%);
       --thick: 8.6cqw;
       --orbit: 33.2cqw;
       --size: 27.6cqw;
       --count: 5;
     }
 
-    .stage[data-count="4"] {
+    .stage[data-count="4"] .wheel {
       --orbit: 32.2cqw;
       --size: 31.5cqw;
       --count: 4;
+    }
+
+    .stage.is-open .wheel {
+      top: 50%;
+      height: var(--wheel-w);
+      width: var(--wheel-w);
+      aspect-ratio: auto;
+    }
+
+    .stage.star-left.is-open .wheel {
+      left: auto;
+      right: 0;
+      transform: translateY(-50%);
+    }
+
+    .stage.star-right.is-open .wheel {
+      left: 0;
+      right: auto;
+      transform: translateY(-50%);
     }
 
     .ring {
@@ -76,7 +107,7 @@
       left: 50%;
       top: 50%;
       width: 9.5em;
-      max-width: 30cqw;
+      max-width: 34cqw;
       margin: 0;
       transform: translate(-50%, -50%);
       color: var(--ink);
@@ -89,8 +120,8 @@
 
     .stage[data-count="5"] .hub {
       width: 6.4em;
-      max-width: 38cqw;
-      font-size: clamp(18px, 5.5cqw, 34px);
+      max-width: 42cqw;
+      font-size: clamp(15px, 5.5cqw, 34px);
     }
 
     .node {
@@ -109,7 +140,7 @@
       background: var(--node);
       color: var(--ink);
       font: inherit;
-      font-size: clamp(11px, 2.75cqw, 15.5px);
+      font-size: clamp(9px, 2.75cqw, 15.5px);
       font-weight: 700;
       line-height: 1.12;
       letter-spacing: -0.015em;
@@ -126,6 +157,13 @@
 
     .node:hover:not([aria-expanded="true"]) {
       background: var(--node-hover);
+    }
+
+    .stage.is-open .node {
+      font-size: clamp(6.5px, 3.15cqw, 13px);
+      line-height: 1.05;
+      padding: 14%;
+      overflow: hidden;
     }
 
     .node[aria-expanded="true"] {
@@ -148,66 +186,72 @@
       box-shadow: 0 0 0 3px var(--ring), 0 0 0 6px var(--ink);
     }
 
-    .star[hidden] { display: none; }
+    .star[hidden] { display: none !important; }
 
-    .star {
+    .star:not([hidden]) {
       position: absolute;
       z-index: 4;
-      left: 0;
       top: 0;
-      width: 0;
-      height: 0;
-      overflow: visible;
+      height: 100%;
+      width: var(--star-w);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 0.35rem;
+      padding: 0.3rem 0.15rem;
       pointer-events: none;
     }
 
+    .stage.star-left .star:not([hidden]) { left: 0; }
+    .stage.star-right .star:not([hidden]) { right: 0; }
+
     .point {
-      position: absolute;
-      width: min(11.5rem, 42vw);
-      max-width: calc(100vw - 1.25rem);
+      position: relative;
+      flex: 1 1 0;
+      min-height: 0;
+      width: 100%;
       margin: 0;
-      padding: 0.4rem 0.55rem 0.45rem;
+      padding: 0.35rem 0.45rem;
       border: 2px solid var(--ring);
-      border-radius: 1.15rem;
+      border-radius: 0.95rem;
       background: #fff;
       color: var(--prose);
       text-align: center;
-      pointer-events: none;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
 
     .point-label {
       margin: 0 0 0.12rem;
       color: #24597f;
-      font-size: 0.68rem;
+      font-size: 0.72rem;
       font-weight: 700;
-      line-height: 1.2;
+      line-height: 1.15;
     }
 
     .point-text {
       margin: 0;
-      font-size: 0.78rem;
+      font-size: 0.82rem;
       font-weight: 450;
-      line-height: 1.28;
+      line-height: 1.25;
     }
 
-    @media (max-width: 380px) {
-      .node { font-size: 10.5px; }
-      .stage[data-count="4"] .hub { font-size: 12px; }
-      .point { width: min(10.4rem, 44vw); }
-    }
   </style>
 
 </head>
 <body>
   <main>
     <div class="stage" data-count="4">
+      <div class="wheel">
       <div class="ring" aria-hidden="true"></div>
       <h1 class="hub">Transportation and response data</h1>
       <button type="button" class="node" style="--i:0" id="roads-button" aria-expanded="false" aria-controls="roads-detail">Roads, bridges, and trails</button>
       <button type="button" class="node" style="--i:1" id="closures-button" aria-expanded="false" aria-controls="closures-detail">Road closures and damage reports</button>
       <button type="button" class="node" style="--i:2" id="shelters-button" aria-expanded="false" aria-controls="shelters-detail">Shelters and emergency facilities</button>
       <button type="button" class="node" style="--i:3" id="support-button" aria-expanded="false" aria-controls="support-detail">UN support sites and humanitarian reports</button>
-    </div>
+      </div>
     <div class="star" id="roads-detail" role="region" aria-labelledby="roads-button" hidden>
       <div class="point">
         <p class="point-label">What it helps answer</p>
@@ -264,96 +308,100 @@
         <p class="point-text">Locations and services can change, and the information may not represent every organization working in the area.</p>
       </div>
     </div>
+    </div>
   </main>
   <script>
+
     (function () {
-      var main = document.querySelector("main");
       var stage = document.querySelector(".stage");
-      var hub = document.querySelector(".hub");
       var buttons = document.querySelectorAll(".node");
 
-      function clamp(value, min, max) {
-        if (max < min) return min;
-        return Math.max(min, Math.min(max, value));
+      function applyLayout(side) {
+        var sw = stage.clientWidth;
+        var sh = stage.clientHeight;
+        var leftover = sw - sh;
+        var starW;
+        var wheel;
+        if (leftover >= 150) {
+          starW = Math.min(300, leftover - 6);
+          wheel = sh;
+        } else {
+          starW = Math.round(sw * 0.4);
+          wheel = Math.max(96, sw - starW - 8);
+        }
+        if (wheel > sh) wheel = sh;
+        stage.style.setProperty("--star-w", starW + "px");
+        stage.style.setProperty("--wheel-w", wheel + "px");
+        stage.classList.add("is-open");
+        stage.classList.toggle("star-left", side === "left");
+        stage.classList.toggle("star-right", side === "right");
       }
 
-      function place(button, star) {
-        var mainRect = main.getBoundingClientRect();
-        var nodeRect = button.getBoundingClientRect();
-        var hubRect = hub.getBoundingClientRect();
+      function fit(star) {
         var points = star.querySelectorAll(".point");
-        var answer = points[0];
-        var benefit = points[1];
-        var limitation = points[2];
-        var pad = 4;
-        [answer, benefit, limitation].forEach(function (point) {
-          point.style.left = "0px";
-          point.style.top = "0px";
-        });
-        var aw = answer.offsetWidth;
-        var ah = answer.offsetHeight;
-        var bw = benefit.offsetWidth;
-        var bh = benefit.offsetHeight;
-        var lw = limitation.offsetWidth;
-        var lh = limitation.offsetHeight;
-        var originX = nodeRect.left + nodeRect.width / 2 - mainRect.left;
-        var originY = nodeRect.bottom - mainRect.top + 8;
-        var ax = clamp(originX - aw / 2, pad, mainRect.width - aw - pad);
-        var ay = originY;
-        var answerRight = mainRect.left + ax + aw;
-        var answerBottom = mainRect.top + ay + ah;
-        var coversHubCenter = ay + mainRect.top < hubRect.bottom - 2 &&
-          answerBottom > hubRect.top + 2 &&
-          mainRect.left + ax < hubRect.left + hubRect.width * 0.62 &&
-          answerRight > hubRect.left + hubRect.width * 0.38;
-        if (coversHubCenter) {
-          ay = hubRect.bottom - mainRect.top + 8;
+        var texts = star.querySelectorAll(".point-text");
+        var labels = star.querySelectorAll(".point-label");
+        var size = 13.5;
+        function apply(next) {
+          texts.forEach(function (node) { node.style.fontSize = next + "px"; });
+          labels.forEach(function (node) { node.style.fontSize = Math.max(9, next - 1.5) + "px"; });
         }
-        var gap = 8;
-        var pairW = bw + lw + gap;
-        var pairLeft = clamp(originX - pairW / 2, pad, mainRect.width - pairW - pad);
-        var by = ay + ah + 6;
-        answer.style.left = ax + "px";
-        answer.style.top = ay + "px";
-        benefit.style.left = pairLeft + "px";
-        benefit.style.top = by + "px";
-        limitation.style.left = (pairLeft + bw + gap) + "px";
-        limitation.style.top = by + "px";
-        var bottom = by + Math.max(bh, lh);
-        var base = stage.offsetTop + stage.offsetHeight;
-        var extra = bottom + 12 - base;
-        main.style.paddingBottom = extra > 0 ? extra + "px" : "";
+        apply(size);
+        var guard = 0;
+        while (guard < 18) {
+          var overflow = false;
+          points.forEach(function (point) {
+            if (point.scrollHeight > point.clientHeight + 1) overflow = true;
+          });
+          if (!overflow || size <= 8) break;
+          size -= 0.5;
+          apply(size);
+          guard += 1;
+        }
+      }
+
+      function show(button) {
+        var star = document.getElementById(button.getAttribute("aria-controls"));
+        if (!star) return;
+        var nodeRect = button.getBoundingClientRect();
+        var stageRect = stage.getBoundingClientRect();
+        var side = (nodeRect.left + nodeRect.width / 2) <= (stageRect.left + stageRect.width / 2) ? "left" : "right";
+        button.setAttribute("aria-expanded", "true");
+        star.hidden = false;
+        applyLayout(side);
+        fit(star);
       }
 
       function closeAll() {
+        stage.classList.remove("is-open", "star-left", "star-right");
+        stage.style.removeProperty("--star-w");
+        stage.style.removeProperty("--wheel-w");
         buttons.forEach(function (other) {
           var otherStar = document.getElementById(other.getAttribute("aria-controls"));
           other.setAttribute("aria-expanded", "false");
           if (otherStar) otherStar.hidden = true;
         });
-        main.style.paddingBottom = "";
       }
 
       buttons.forEach(function (button) {
         button.addEventListener("click", function () {
-          var star = document.getElementById(button.getAttribute("aria-controls"));
           var open = button.getAttribute("aria-expanded") === "true";
           closeAll();
-          if (!open && star) {
-            button.setAttribute("aria-expanded", "true");
-            star.hidden = false;
-            place(button, star);
-          }
+          if (!open) show(button);
         });
       });
 
       window.addEventListener("resize", function () {
         buttons.forEach(function (button) {
           if (button.getAttribute("aria-expanded") === "true") {
-            var star = document.getElementById(button.getAttribute("aria-controls"));
-            if (star) place(button, star);
+            closeAll();
+            show(button);
           }
         });
+      });
+
+      buttons.forEach(function (button) {
+        if (button.getAttribute("aria-expanded") === "true") show(button);
       });
     })();
 
