@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Why These Methods Are Appropriate.</title>
+  <style>
+    :root {
+      --page: #f7f5ef;
+      --card: #f0ede1;
+      --line: #cec29d;
+      --text: #2e546c;
+      --arrow: #007e7a;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      background: #f7f5ef;
+      color: #2e546c;
+    }
+
+    body {
+      font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+      font-size: 16px;
+      line-height: 1.4;
+    }
+
+    main {
+      width: 100%;
+      padding: 0.7rem 0.85rem 0.75rem;
+    }
+
+    h1 {
+      margin: 0 0 0.6rem;
+      color: #2e546c;
+      font-size: 1.2rem;
+      font-weight: 650;
+      letter-spacing: -0.015em;
+      line-height: 1.3;
+    }
+
+    .card {
+      background: #f0ede1;
+      border: 1px solid #cec29d;
+      border-radius: 12px;
+      padding: 0.75rem 0.9rem 0.8rem;
+    }
+
+    dl {
+      margin: 0;
+    }
+
+    .field + .field {
+      margin-top: 0.5rem;
+      padding-top: 0.5rem;
+      border-top: 1px solid #cec29d;
+    }
+
+    dt {
+      margin: 0;
+      color: #2e546c;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      line-height: 1.3;
+    }
+
+    dd {
+      margin: 0.12rem 0 0;
+      color: #2e546c;
+      font-size: 0.98rem;
+      font-weight: 450;
+      line-height: 1.35;
+    }
+
+    .controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.85rem;
+      margin-top: 0.6rem;
+    }
+
+    .arrow {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2.5rem;
+      height: 2.5rem;
+      padding: 0;
+      border: 0;
+      border-radius: 999px;
+      background: #007e7a;
+      color: #f7f5ef;
+      cursor: pointer;
+    }
+
+    .arrow svg {
+      display: block;
+      width: 1.2rem;
+      height: 1.2rem;
+    }
+
+    .arrow:hover:not(:disabled) {
+      background: #007e7a;
+    }
+
+    .arrow:disabled {
+      opacity: 0.38;
+      cursor: not-allowed;
+    }
+
+    .arrow:focus {
+      outline: 3px solid #2e546c;
+      outline-offset: 3px;
+    }
+
+    .arrow:focus:not(:focus-visible) {
+      outline: none;
+    }
+
+    .arrow:focus-visible {
+      outline: 3px solid #2e546c;
+      outline-offset: 3px;
+    }
+
+    .count {
+      margin: 0;
+      min-width: 4.75rem;
+      color: #2e546c;
+      font-size: 0.95rem;
+      font-weight: 650;
+      font-variant-numeric: tabular-nums;
+      text-align: center;
+    }
+
+    @media (max-width: 520px) {
+      main {
+        padding: 0.6rem 0.6rem 0.65rem;
+      }
+
+      h1 {
+        font-size: 1.12rem;
+      }
+
+      .card {
+        padding: 0.7rem 0.75rem 0.75rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Why These Methods Are Appropriate.</h1>
+    <div class="deck" id="deck" aria-live="polite">
+      <article class="card is-active" aria-hidden="false">
+        <dl>
+          <div class="field">
+            <dt>GEOINT thread</dt>
+            <dd>Spatialization</dd>
+          </div>
+          <div class="field">
+            <dt>Method</dt>
+            <dd>Hypotheses and problem framing</dd>
+          </div>
+          <div class="field">
+            <dt>Classification</dt>
+            <dd>Human-centered</dd>
+          </div>
+          <div class="field">
+            <dt>Defense</dt>
+            <dd>Humans define what “evacuation challenge” means in the South Kivu context.</dd>
+          </div>
+        </dl>
+      </article>
+      <article class="card" hidden aria-hidden="true">
+        <dl>
+          <div class="field">
+            <dt>GEOINT thread</dt>
+            <dd>Recording</dd>
+          </div>
+          <div class="field">
+            <dt>Method</dt>
+            <dd>Survey123 and data conditioning</dd>
+          </div>
+          <div class="field">
+            <dt>Classification</dt>
+            <dd>Mixed</dd>
+          </div>
+          <div class="field">
+            <dt>Defense</dt>
+            <dd>People provide local observations, while GIS tools organize and store the information.</dd>
+          </div>
+        </dl>
+      </article>
+      <article class="card" hidden aria-hidden="true">
+        <dl>
+          <div class="field">
+            <dt>GEOINT thread</dt>
+            <dd>Discovery</dd>
+          </div>
+          <div class="field">
+            <dt>Method</dt>
+            <dd>ESDA and imagery change detection</dd>
+          </div>
+          <div class="field">
+            <dt>Classification</dt>
+            <dd>Mixed</dd>
+          </div>
+          <div class="field">
+            <dt>Defense</dt>
+            <dd>Machines process large datasets, while analysts interpret whether detected patterns are meaningful.</dd>
+          </div>
+        </dl>
+      </article>
+      <article class="card" hidden aria-hidden="true">
+        <dl>
+          <div class="field">
+            <dt>GEOINT thread</dt>
+            <dd>Tracking</dd>
+          </div>
+          <div class="field">
+            <dt>Method</dt>
+            <dd>Emerging Hot Spot Analysis</dd>
+          </div>
+          <div class="field">
+            <dt>Classification</dt>
+            <dd>AAG-centered with human verification</dd>
+          </div>
+          <div class="field">
+            <dt>Defense</dt>
+            <dd>The tool identifies persistent or intensifying problems over time, but analysts must check the results.</dd>
+          </div>
+        </dl>
+      </article>
+      <article class="card" hidden aria-hidden="true">
+        <dl>
+          <div class="field">
+            <dt>GEOINT thread</dt>
+            <dd>Comprehension</dd>
+          </div>
+          <div class="field">
+            <dt>Method</dt>
+            <dd>Outside-In Thinking and expert interpretation</dd>
+          </div>
+          <div class="field">
+            <dt>Classification</dt>
+            <dd>Human-centered</dd>
+          </div>
+          <div class="field">
+            <dt>Defense</dt>
+            <dd>Analysts and local experts determine what the combined results mean.</dd>
+          </div>
+        </dl>
+      </article>
+      <article class="card" hidden aria-hidden="true">
+        <dl>
+          <div class="field">
+            <dt>GEOINT thread</dt>
+            <dd>Communication</dd>
+          </div>
+          <div class="field">
+            <dt>Method</dt>
+            <dd>StoryMap, maps, tables, and briefings</dd>
+          </div>
+          <div class="field">
+            <dt>Classification</dt>
+            <dd>Human-centered with AAG support</dd>
+          </div>
+          <div class="field">
+            <dt>Defense</dt>
+            <dd>Humans decide what should be communicated, while GIS tools create the visual products.</dd>
+          </div>
+        </dl>
+      </article>
+    </div>
+    <div class="controls">
+      <button type="button" class="arrow" id="prev" aria-label="Previous card" aria-controls="deck" disabled>
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M14.25 5.75 8.5 12l5.75 6.25" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+      </button>
+      <p class="count" id="count">1 of 6</p>
+      <button type="button" class="arrow" id="next" aria-label="Next card" aria-controls="deck">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M9.75 5.75 15.5 12l-5.75 6.25" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+      </button>
+    </div>
+  </main>
+  <script>
+    (function () {
+      var cards = Array.prototype.slice.call(document.querySelectorAll(".card"));
+      var prev = document.getElementById("prev");
+      var next = document.getElementById("next");
+      var count = document.getElementById("count");
+      var index = 0;
+
+      function show(nextIndex) {
+        if (nextIndex < 0 || nextIndex >= cards.length || nextIndex === index && cards[index].classList.contains("is-active")) {
+          prev.disabled = index === 0;
+          next.disabled = index === cards.length - 1;
+          return;
+        }
+        index = nextIndex;
+        cards.forEach(function (card, i) {
+          var active = i === index;
+          card.hidden = !active;
+          card.classList.toggle("is-active", active);
+          card.setAttribute("aria-hidden", active ? "false" : "true");
+        });
+        count.textContent = (index + 1) + " of " + cards.length;
+        prev.disabled = index === 0;
+        next.disabled = index === cards.length - 1;
+      }
+
+      prev.addEventListener("click", function () {
+        show(index - 1);
+      });
+
+      next.addEventListener("click", function () {
+        show(index + 1);
+      });
+
+      document.addEventListener("keydown", function (event) {
+        if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) {
+          return;
+        }
+        if (event.key === "ArrowRight") {
+          event.preventDefault();
+          show(index + 1);
+        } else if (event.key === "ArrowLeft") {
+          event.preventDefault();
+          show(index - 1);
+        }
+      });
+
+      show(0);
+    })();
+  </script>
+</body>
+</html>
