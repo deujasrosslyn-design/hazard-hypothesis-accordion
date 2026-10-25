@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Population and settlement data</title>
+  <style>
+    :root {
+      --page: #f7f5ef;
+      --card: #f0ede1;
+      --line: #cec29d;
+      --ink: #202b2b;
+      --label: #2e546c;
+      --accent: #007e7a;
+      --prose: #52616b;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      width: 100%;
+    }
+
+    html {
+      background: var(--page);
+    }
+
+    body {
+      background: var(--page);
+      color: var(--ink);
+      font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+      font-size: 16px;
+      line-height: 1.45;
+    }
+
+    main {
+      width: 100%;
+      padding: 0.75rem 1rem 0;
+    }
+
+    h1 {
+      margin: 0 0 0.7rem;
+      color: var(--label);
+      font-size: 1.2rem;
+      font-weight: 650;
+      letter-spacing: -0.015em;
+      line-height: 1.3;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: inherit;
+      font-weight: inherit;
+    }
+
+    .list {
+      width: 100%;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .item + .item {
+      border-top: 1px solid var(--line);
+    }
+
+    .item-button {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.85rem;
+      margin: 0;
+      padding: 0.8rem 1rem 0.8rem 0.9rem;
+      border: 0;
+      border-left: 4px solid var(--accent);
+      background: var(--card);
+      color: var(--label);
+      font: inherit;
+      font-weight: 650;
+      text-align: left;
+      cursor: pointer;
+      appearance: none;
+    }
+
+    .item-button:hover,
+    .item-button[aria-expanded="true"] {
+      background: var(--page);
+    }
+
+    .item-button:focus {
+      outline: none;
+    }
+
+    .item-button:focus-visible {
+      outline: 3px solid var(--accent);
+      outline-offset: -3px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .item-label {
+      display: block;
+    }
+
+    .item-icon {
+      flex: 0 0 auto;
+      width: 0.55rem;
+      height: 0.55rem;
+      margin-right: 0.15rem;
+      border-right: 2px solid var(--accent);
+      border-bottom: 2px solid var(--accent);
+      transform: translateY(-0.12rem) rotate(45deg);
+    }
+
+    .item-button[aria-expanded="true"] .item-icon {
+      transform: translateY(0.12rem) rotate(225deg);
+    }
+
+    .detail {
+      background: var(--card);
+    }
+
+    .detail[hidden] {
+      display: none;
+    }
+
+    dl {
+      margin: 0;
+      padding: 0.15rem 1.05rem 0.95rem 1.15rem;
+    }
+
+    dt {
+      margin: 0.6rem 0 0.12rem;
+      color: var(--label);
+      font-size: 0.78rem;
+      font-weight: 650;
+    }
+
+    dt:first-child {
+      margin-top: 0;
+    }
+
+    dd {
+      margin: 0;
+      color: var(--prose);
+      font-weight: 450;
+    }
+
+    @media (max-width: 520px) {
+      main {
+        padding: 0.8rem 0.65rem 0;
+      }
+
+      h1 {
+        font-size: 1.12rem;
+      }
+
+      .item-button {
+        padding: 0.75rem 0.75rem 0.75rem 0.7rem;
+        font-size: 1rem;
+      }
+
+      dl {
+        padding-right: 0.8rem;
+        padding-left: 0.95rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .item-icon {
+        transition: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Population and settlement data</h1>
+    <div class="list">
+      <div class="item">
+        <h2>
+          <button type="button" class="item-button" id="settlement-button" aria-expanded="false" aria-controls="settlement-detail">
+            <span class="item-label">Settlement locations</span>
+            <span class="item-icon" aria-hidden="true"></span>
+          </button>
+        </h2>
+        <div class="detail" id="settlement-detail" role="region" aria-labelledby="settlement-button" hidden>
+          <dl>
+            <dt>What it helps answer</dt>
+            <dd>Settlement data can show where communities are located in relation to hazards and evacuation routes.</dd>
+            <dt>Benefit</dt>
+            <dd>It connects the hazard data to specific communities.</dd>
+            <dt>Limitation</dt>
+            <dd>Some settlements may be missing, or the data may not show recent population movement.</dd>
+          </dl>
+        </div>
+      </div>
+      <div class="item">
+        <h2>
+          <button type="button" class="item-button" id="worldpop-button" aria-expanded="false" aria-controls="worldpop-detail">
+            <span class="item-label">WorldPop or LandScan</span>
+            <span class="item-icon" aria-hidden="true"></span>
+          </button>
+        </h2>
+        <div class="detail" id="worldpop-detail" role="region" aria-labelledby="worldpop-button" hidden>
+          <dl>
+            <dt>What it helps answer</dt>
+            <dd>WorldPop or LandScan could help estimate how many people may be exposed to flooding, landslides, or transportation isolation.</dd>
+            <dt>Benefit</dt>
+            <dd>It can help identify where more people may need assistance.</dd>
+            <dt>Limitation</dt>
+            <dd>The estimates may be too general or outdated, especially after people have moved because of a disaster.</dd>
+          </dl>
+        </div>
+      </div>
+      <div class="item">
+        <h2>
+          <button type="button" class="item-button" id="vulnerable-button" aria-expanded="false" aria-controls="vulnerable-detail">
+            <span class="item-label">Vulnerable populations</span>
+            <span class="item-icon" aria-hidden="true"></span>
+          </button>
+        </h2>
+        <div class="detail" id="vulnerable-detail" role="region" aria-labelledby="vulnerable-button" hidden>
+          <dl>
+            <dt>What it helps answer</dt>
+            <dd>Information about children, older adults, people with disabilities, and displaced populations could help identify communities that may need additional support during an evacuation.</dd>
+            <dt>Benefit</dt>
+            <dd>It shows that evacuation difficulty is not only about the number of people. It also depends on the needs of the population.</dd>
+            <dt>Limitation</dt>
+            <dd>This information may be incomplete or difficult to collect consistently.</dd>
+          </dl>
+        </div>
+      </div>
+      <div class="item">
+        <h2>
+          <button type="button" class="item-button" id="displacement-button" aria-expanded="false" aria-controls="displacement-detail">
+            <span class="item-label">Population displacement</span>
+            <span class="item-icon" aria-hidden="true"></span>
+          </button>
+        </h2>
+        <div class="detail" id="displacement-detail" role="region" aria-labelledby="displacement-button" hidden>
+          <dl>
+            <dt>What it helps answer</dt>
+            <dd>Population displacement data can help show whether people have moved because of flooding, landslides, conflict, or damaged infrastructure. This is important because older population estimates may not represent where people are located during or after a disaster.</dd>
+            <dt>Benefit</dt>
+            <dd>It can provide a more current idea of who may need evacuation support.</dd>
+            <dt>Limitation</dt>
+            <dd>Displaced populations can move again, and the available information may not include people who are staying with family, using informal shelters, or living in areas that are difficult to reach.</dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </main>
+  <script>
+    (function () {
+      var buttons = document.querySelectorAll(".item-button");
+      buttons.forEach(function (button) {
+        button.addEventListener("click", function () {
+          var panel = document.getElementById(button.getAttribute("aria-controls"));
+          var open = button.getAttribute("aria-expanded") === "true";
+          buttons.forEach(function (other) {
+            var otherPanel = document.getElementById(other.getAttribute("aria-controls"));
+            other.setAttribute("aria-expanded", "false");
+            if (otherPanel) otherPanel.hidden = true;
+          });
+          if (!open && panel) {
+            button.setAttribute("aria-expanded", "true");
+            panel.hidden = false;
+          }
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

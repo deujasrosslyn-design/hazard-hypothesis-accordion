@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hazard data</title>
+  <style>
+    :root {
+      --page: #f7f5ef;
+      --card: #f0ede1;
+      --line: #cec29d;
+      --ink: #202b2b;
+      --label: #2e546c;
+      --accent: #007e7a;
+      --prose: #52616b;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      width: 100%;
+    }
+
+    html {
+      background: var(--page);
+    }
+
+    body {
+      background: var(--page);
+      color: var(--ink);
+      font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+      font-size: 16px;
+      line-height: 1.45;
+    }
+
+    main {
+      width: 100%;
+      padding: 0.75rem 1rem 0;
+    }
+
+    h1 {
+      margin: 0 0 0.7rem;
+      color: var(--label);
+      font-size: 1.2rem;
+      font-weight: 650;
+      letter-spacing: -0.015em;
+      line-height: 1.3;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: inherit;
+      font-weight: inherit;
+    }
+
+    .list {
+      width: 100%;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .item + .item {
+      border-top: 1px solid var(--line);
+    }
+
+    .item-button {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.85rem;
+      margin: 0;
+      padding: 0.8rem 1rem 0.8rem 0.9rem;
+      border: 0;
+      border-left: 4px solid var(--accent);
+      background: var(--card);
+      color: var(--label);
+      font: inherit;
+      font-weight: 650;
+      text-align: left;
+      cursor: pointer;
+      appearance: none;
+    }
+
+    .item-button:hover,
+    .item-button[aria-expanded="true"] {
+      background: var(--page);
+    }
+
+    .item-button:focus {
+      outline: none;
+    }
+
+    .item-button:focus-visible {
+      outline: 3px solid var(--accent);
+      outline-offset: -3px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .item-label {
+      display: block;
+    }
+
+    .item-icon {
+      flex: 0 0 auto;
+      width: 0.55rem;
+      height: 0.55rem;
+      margin-right: 0.15rem;
+      border-right: 2px solid var(--accent);
+      border-bottom: 2px solid var(--accent);
+      transform: translateY(-0.12rem) rotate(45deg);
+    }
+
+    .item-button[aria-expanded="true"] .item-icon {
+      transform: translateY(0.12rem) rotate(225deg);
+    }
+
+    .detail {
+      background: var(--card);
+    }
+
+    .detail[hidden] {
+      display: none;
+    }
+
+    dl {
+      margin: 0;
+      padding: 0.15rem 1.05rem 0.95rem 1.15rem;
+    }
+
+    dt {
+      margin: 0.6rem 0 0.12rem;
+      color: var(--label);
+      font-size: 0.78rem;
+      font-weight: 650;
+    }
+
+    dt:first-child {
+      margin-top: 0;
+    }
+
+    dd {
+      margin: 0;
+      color: var(--prose);
+      font-weight: 450;
+    }
+
+    .hyp {
+      display: block;
+      color: var(--label);
+      font-weight: 650;
+    }
+
+    .hyp + .hyp {
+      margin-top: 0.12rem;
+    }
+
+    dd .hyp:last-child {
+      margin-bottom: 0;
+    }
+
+    .hyp-note {
+      display: block;
+      margin-top: 0.2rem;
+      color: var(--prose);
+      font-weight: 450;
+    }
+
+    @media (max-width: 520px) {
+      main {
+        padding: 0.8rem 0.65rem 0;
+      }
+
+      h1 {
+        font-size: 1.12rem;
+      }
+
+      .item-button {
+        padding: 0.75rem 0.75rem 0.75rem 0.7rem;
+        font-size: 1rem;
+      }
+
+      dl {
+        padding-right: 0.8rem;
+        padding-left: 0.95rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .item-icon {
+        transition: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Hazard data</h1>
+    <div class="list">
+      <div class="item">
+        <h2>
+          <button type="button" class="item-button" id="elevation-button" aria-expanded="false" aria-controls="elevation-detail">
+            <span class="item-label">Elevation and slope</span>
+            <span class="item-icon" aria-hidden="true"></span>
+          </button>
+        </h2>
+        <div class="detail" id="elevation-detail" role="region" aria-labelledby="elevation-button" hidden>
+          <dl>
+            <dt>What it helps answer</dt>
+            <dd>Elevation and slope data can help identify areas with steep terrain where landslides may threaten communities or evacuation routes.</dd>
+            <dt>Hypothesis</dt>
+            <dd>
+              <span class="hyp">H1 — Hypothesis 1: Landslide Exposure</span>
+              <span class="hyp-note">This supports H1 because communities near or below steep slopes may have a higher risk of blocked roads or damaged homes.</span>
+            </dd>
+            <dt>Benefit</dt>
+            <dd>It helps us identify areas where the terrain may increase landslide risks.</dd>
+            <dt>Limitation</dt>
+            <dd>The resolution may not show every small slope or local terrain feature.</dd>
+          </dl>
+        </div>
+      </div>
+      <div class="item">
+        <h2>
+          <button type="button" class="item-button" id="rivers-button" aria-expanded="false" aria-controls="rivers-detail">
+            <span class="item-label">Rivers and flood zones</span>
+            <span class="item-icon" aria-hidden="true"></span>
+          </button>
+        </h2>
+        <div class="detail" id="rivers-detail" role="region" aria-labelledby="rivers-button" hidden>
+          <dl>
+            <dt>What it helps answer</dt>
+            <dd>River systems and flood zones can help identify communities and transportation routes that may be affected by flooding.</dd>
+            <dt>Hypothesis</dt>
+            <dd>
+              <span class="hyp">H2 — Hypothesis 2: Flood Exposure</span>
+              <span class="hyp-note">This supports H2 because low-lying communities near rivers may have a higher risk of flooding.</span>
+            </dd>
+            <dt>Benefit</dt>
+            <dd>We can compare rivers and flood zones with settlements, roads, and bridges.</dd>
+            <dt>Limitation</dt>
+            <dd>A flood zone does not confirm that flooding is happening at the current time.</dd>
+          </dl>
+        </div>
+      </div>
+      <div class="item">
+        <h2>
+          <button type="button" class="item-button" id="landslide-button" aria-expanded="false" aria-controls="landslide-detail">
+            <span class="item-label">Landslide locations</span>
+            <span class="item-icon" aria-hidden="true"></span>
+          </button>
+        </h2>
+        <div class="detail" id="landslide-detail" role="region" aria-labelledby="landslide-button" hidden>
+          <dl>
+            <dt>What it helps answer</dt>
+            <dd>Known landslide locations can be compared with slope, roads, settlements, and satellite imagery. This can help show whether previous landslides have affected evacuation routes.</dd>
+            <dt>Benefit</dt>
+            <dd>It provides evidence of where landslides have already occurred.</dd>
+            <dt>Limitation</dt>
+            <dd>Areas without reported landslides may not actually be safe. There may simply be limited reporting or missing data.</dd>
+          </dl>
+        </div>
+      </div>
+      <div class="item">
+        <h2>
+          <button type="button" class="item-button" id="satellite-button" aria-expanded="false" aria-controls="satellite-detail">
+            <span class="item-label">Satellite imagery</span>
+            <span class="item-icon" aria-hidden="true"></span>
+          </button>
+        </h2>
+        <div class="detail" id="satellite-detail" role="region" aria-labelledby="satellite-button" hidden>
+          <dl>
+            <dt>What it helps answer</dt>
+            <dd>Before-and-after satellite imagery can help identify changes in water coverage, bare ground, buildings, roads, and other infrastructure.</dd>
+            <dt>Benefit</dt>
+            <dd>Imagery can cover a large area and may show damage that has not been reported.</dd>
+            <dt>Limitation</dt>
+            <dd>Clouds, shadows, resolution, and the time between images can make the changes difficult to confirm.</dd>
+          </dl>
+        </div>
+      </div>
+      <div class="item">
+        <h2>
+          <button type="button" class="item-button" id="rainfall-button" aria-expanded="false" aria-controls="rainfall-detail">
+            <span class="item-label">Rainfall</span>
+            <span class="item-icon" aria-hidden="true"></span>
+          </button>
+        </h2>
+        <div class="detail" id="rainfall-detail" role="region" aria-labelledby="rainfall-button" hidden>
+          <dl>
+            <dt>What it helps answer</dt>
+            <dd>Rainfall records can help show where recent or unusually heavy rainfall may increase the risk of flooding and landslides.</dd>
+            <dt>Hypothesis</dt>
+            <dd>
+              <span class="hyp">H1 — Hypothesis 1: Landslide Exposure</span>
+              <span class="hyp">H2 — Hypothesis 2: Flood Exposure</span>
+              <span class="hyp-note">This information can support both H1 and H2 because rainfall may contribute to slope failure and rising water levels.</span>
+            </dd>
+            <dt>Benefit</dt>
+            <dd>It can help connect a hazard to a specific time period and show whether conditions were becoming worse.</dd>
+            <dt>Limitation</dt>
+            <dd>Rainfall may vary across short distances, and available weather stations may not cover every community equally.</dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </main>
+  <script>
+    (function () {
+      var buttons = document.querySelectorAll(".item-button");
+      buttons.forEach(function (button) {
+        button.addEventListener("click", function () {
+          var panel = document.getElementById(button.getAttribute("aria-controls"));
+          var open = button.getAttribute("aria-expanded") === "true";
+          buttons.forEach(function (other) {
+            var otherPanel = document.getElementById(other.getAttribute("aria-controls"));
+            other.setAttribute("aria-expanded", "false");
+            if (otherPanel) otherPanel.hidden = true;
+          });
+          if (!open && panel) {
+            button.setAttribute("aria-expanded", "true");
+            panel.hidden = false;
+          }
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
